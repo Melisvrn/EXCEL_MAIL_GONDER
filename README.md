@@ -24,7 +24,7 @@
 
 <img src="https://user-images.githubusercontent.com/55049795/147843542-9632a74f-c03c-4671-b785-133ed934bbc5.png" width="500" >
 
-## Excele Aktarılan verilerin Mail Atılması
+## Excele Aktarılan Verilerin Gönderilen Mail İçerisine Ek Olarak Eklenmesi
 Mailin gönderilip gönderilmediği SOST işlem kodu ile sorgulanmaktadır.
 
 <img src="https://user-images.githubusercontent.com/55049795/147843559-e0a920cf-3542-4af6-9f22-d64abe14c667.png" width="500" >
