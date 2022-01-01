@@ -1,0 +1,62 @@
+*&---------------------------------------------------------------------*
+*&  Include           ZMVEXCL_PRG_TOP
+*&---------------------------------------------------------------------*
+
+TABLES:
+  MARA , "Genel Malzeme verileri
+  MARC , "Malzeme için üretim yeri verileri
+  MARD , "malzeme depo verileri
+  SSCRFIELDS. "Seçim ekranlarındaki alanlardır.
+"Seçim ekranına eklenen bir fonksiyon kodunu  veya onay kutusuyla ilgili komutu kaydeder.
+
+
+DATA: GT_ITAB TYPE STANDARD TABLE OF ZMV_EXCL_STR WITH HEADER LINE,
+      GS_ITAB TYPE ZMV_EXCL_STR.
+
+DATA : LV_INDEX TYPE SY-TABIX. "tabloda kaçıncı satırı okuduğunu gösterir.
+
+DATA: C_CHECK TYPE C VALUE 'X'.
+
+DATA : IT_RAW  TYPE TRUXS_T_TEXT_DATA.
+
+DATA: LV_VALID   TYPE XFELD, "seçme kutusu
+
+      LV_REFRESH TYPE XFELD.
+
+"DATA: P_FILE TYPE RLGRAP-FILENAME.
+
+DATA: ALV_GRID_0100 TYPE REF TO CL_GUI_DOCKING_CONTAINER,
+      ALV_0100      TYPE REF TO CL_GUI_ALV_GRID.
+
+DATA : FIELDCAT       TYPE LVC_T_FCAT, 
+       GS_FIELDCAT    LIKE LINE OF FIELDCAT,
+       GS_LAYOUT_0100 TYPE LVC_S_LAYO. 
+
+"Sütunları excel formatına çeviriyoruz.
+DATA: EXCEL    TYPE OLE2_OBJECT, 
+      WORKBOOK TYPE OLE2_OBJECT,
+      SHEET    TYPE OLE2_OBJECT,
+      CELL     TYPE OLE2_OBJECT,
+      ROW      TYPE OLE2_OBJECT,
+      COLOR    TYPE OLE2_OBJECT.
+
+DATA: LV_STRING  TYPE STRING,
+      LV_STRING2 TYPE STRING,
+      SIZE       TYPE SO_OBJ_LEN.
+CONSTANTS: LC_TABDEL  TYPE C VALUE CL_ABAP_CHAR_UTILITIES=>HORIZONTAL_TAB,          
+           LC_NEWLINE TYPE C VALUE CL_ABAP_CHAR_UTILITIES=>NEWLINE.
+
+
+DATA: SEND_REQUEST TYPE REF TO CL_BCS.
+DATA: TEXT TYPE BCSY_TEXT. "Verileri içe aktarma parametresi
+DATA: BINARY_CONTENT TYPE SOLIX_TAB. "255 bayt ham veri satırlarını içeren bir SAP dahili tablo yapısı.
+DATA: BINARY_CONTENT2 TYPE SOLIX_TAB.
+DATA: DOCUMENT TYPE REF TO CL_DOCUMENT_BCS.
+DATA: SENDER TYPE REF TO CL_SAPUSER_BCS.
+DATA: CUSTOM_SENDER TYPE REF TO CL_CAM_ADDRESS_BCS.
+DATA: LO_SENDER TYPE REF TO IF_SENDER_BCS.
+DATA: CONVERT TYPE REF TO CL_BCS_CONVERT.
+DATA: RECIPIENT TYPE REF TO IF_RECIPIENT_BCS.
+DATA: BCS_EXCEPTION TYPE REF TO CX_BCS.
+DATA: SENT_TO_ALL TYPE OS_BOOLEAN,
+      LV_MESSAGE  TYPE STRING.
